@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Scam Message Detector Pro</title>
+  <link rel="stylesheet" href="app.css" />
+  <script>window.API_BASE = window.API_BASE || 'http://localhost:3000';</script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔍 Scam Detector Pro</h1>
+      <p>Changanua ujumbe wa scam kwa akili</p>
+    </div>
+
+    <div id="passwordModal" class="modal-overlay">
+      <div class="modal">
+        <h2>🔐 Admin Login</h2>
+        <input type="password" id="adminPassword" placeholder="Ingiza password..." onkeypress="if(event.key==='Enter') loginAdmin()" />
+        <button class="btn-primary" onclick="loginAdmin()">Fungua</button>
+        <button class="btn-secondary" onclick="document.getElementById('passwordModal').classList.remove('show')">Ghairi</button>
+      </div>
+    </div>
+
+    <div id="adminPanel" class="card admin-panel" style="display:none;">
+      <div class="card-title">🔐 Mipangilio ya Admin</div>
+      <label>📝 Matangazo HTML Code:</label>
+      <textarea id="adsHtml" style="min-height:120px"></textarea>
+      <button class="btn-primary" onclick="saveAds()">💾 Hifadhi Matangazo</button>
+      <button class="btn-secondary" onclick="logoutAdmin()">❌ Toka</button>
+      <small>Matangazo yatapitishwa kusanitiwa server-side kabla ya kuonyesha.</small>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📨 Ingiza Ujumbe Unayoshuku</div>
+
+      <label>Andika ujumbe wa SMS/WhatsApp:</label>
+      <textarea id="message" placeholder="Andika ujumbe unayoshuku hapa..."></textarea>
+
+      <label>📸 Au pakia picha:</label>
+      <input type="file" id="imageUpload" accept="image/*" />
+      <div id="imagePreview" style="display:none"><img id="previewImg" /><button class="btn-secondary" onclick="clearImg()">🗑️ Futa Picha</button></div>
+
+      <label>Lugha:</label>
+      <select id="language"><option value="sw">Kiswahili</option><option value="en">English</option></select>
+
+      <button class="btn-primary" id="analyzeBtn" onclick="analyze()">🔍 Changanua Sasa</button>
+      <button class="btn-secondary" onclick="resetAll()">🗑️ Futa Yote</button>
+
+      <div id="loading" class="loading" style="display:none"><div class="spinner"></div><p>⏳ Inachanganua... Subiri</p></div>
+      <div id="result" class="result" style="display:none"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Takwimu</div>
+      <div class="stats">
+        <div class="stat-box"><div class="stat-number" id="total">0</div><div class="stat-label">Uchunguzi</div></div>
+        <div class="stat-box"><div class="stat-number" id="scams">0</div><div class="stat-label">Scam/Suspicious</div></div>
+        <div class="stat-box"><div class="stat-number" id="safe">0</div><div class="stat-label">Salama</div></div>
+      </div>
+    </div>
+
+    <div class="card ads-card">
+      <div class="card-title">🎯 Matangazo</div>
+      <div id="adsContent"></div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin:30px 0;">
+    <button onclick="document.getElementById('passwordModal').classList.toggle('show')">⚙️ Admin Settings</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+  </html>
